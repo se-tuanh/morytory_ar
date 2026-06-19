@@ -43,3 +43,16 @@
 .mindar-ui-overlay {
   display: none !important;
 }
+
+/* Fix AR camera feed alignment and scaling for in-app browsers like Zalo */
+#ar-container video,
+#ar-container canvas {
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
