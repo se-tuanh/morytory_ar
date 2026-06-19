@@ -43,7 +43,6 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
             orderId: newOrderId,
             targetImage: compressedImage,
             effect: item.selectedAREffect || 'snow',
-            arVideo: item.arVideo || null,
             music: item.music || null,
             overlayText: item.overlay?.text || '',
             overlayFont: item.overlay?.fontStyle || 'serif',

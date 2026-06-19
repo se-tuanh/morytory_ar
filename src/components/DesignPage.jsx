@@ -16,7 +16,7 @@ export default function DesignPage() {
   const navigate = useNavigate();
   const [isPreviewCollapsed, setIsPreviewCollapsed] = useState(false);
   const [draftExists, setDraftExists] = useState(null);
-  const { selectedAREffect, arVideo, photoPreviewUrl, overlay, frameSize, pricing, photo, music } = useDesign();
+  const { selectedAREffect, photoPreviewUrl, overlay, frameSize, pricing, photo, music } = useDesign();
   const designDispatch = useDesignDispatch();
   const cartDispatch = useCartDispatch();
 
@@ -42,7 +42,6 @@ export default function DesignPage() {
       photo,
       frameSize,
       selectedAREffect,
-      arVideo,
       music,
       overlay,
       pricing
