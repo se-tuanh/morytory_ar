@@ -59,10 +59,7 @@ export default function DesignPage() {
         <button onClick={() => navigate('/')} className="p-2 hover:bg-gray-100 rounded-full transition-colors -ml-2">
           <ArrowLeft className="w-5 h-5 text-brand-text" />
         </button>
-        <div className="flex items-center gap-3 ml-2">
-          <img src="/logo.png" alt="MoryTory Logo" className="h-8 w-8 object-contain rounded-full" />
-          <span className="font-serif font-bold text-brand-wood text-lg">MoryTory</span>
-        </div>
+        <span className="ml-2 font-serif font-bold text-brand-wood text-lg">Studio MoryTory</span>
       </div>
 
       {/* Left Column (Preview) */}

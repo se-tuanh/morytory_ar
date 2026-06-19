@@ -8,11 +8,8 @@ export default function HomePage() {
     <div className="min-h-screen flex flex-col bg-brand-bg text-brand-text font-sans">
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 bg-brand-bg/90 backdrop-blur-md border-b border-brand-wood/20 px-6 py-4 flex justify-between items-center shadow-sm">
-        <div className="flex items-center gap-4">
-          <img src="/logo.png" alt="MoryTory Logo" className="h-10 w-10 object-contain rounded-full" />
-          <div className="text-2xl font-serif font-bold text-brand-wood tracking-wide">
-            MoryTory
-          </div>
+        <div className="text-2xl font-serif font-bold text-brand-wood tracking-wide">
+          MoryTory
         </div>
         <div className="flex items-center gap-6">
           <a href="https://www.facebook.com/profile.php?id=61590697139502" target="_blank" rel="noopener noreferrer" className="text-brand-wood hover:opacity-80 transition-opacity">
