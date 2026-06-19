@@ -23,6 +23,7 @@ export const ARViewer = ({ composedImage, effect, music, overlayText, overlayFon
   const [mindFileUrl, setMindFileUrl] = useState(null);
   const [progress, setProgress] = useState(0);
   const [isCompiling, setIsCompiling] = useState(true);
+  const [isStarted, setIsStarted] = useState(false);
   const targetRef = useRef(null);
   const audioRef = useRef(null);
 
@@ -57,6 +58,15 @@ export const ARViewer = ({ composedImage, effect, music, overlayText, overlayFon
       if (url) URL.revokeObjectURL(url);
     };
   }, [composedImage]);
+
+  const startAR = () => {
+    if (audioRef.current) {
+      audioRef.current.play().then(() => {
+        audioRef.current.pause();
+      }).catch(e => console.log('Audio unlock failed:', e));
+    }
+    setIsStarted(true);
+  };
 
   useEffect(() => {
     const target = targetRef.current;
@@ -100,6 +110,28 @@ export const ARViewer = ({ composedImage, effect, music, overlayText, overlayFon
         }}>
           <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Đang xử lý ảnh AR... {progress}%</h2>
           <p>Vui lòng chờ trong giây lát</p>
+        </div>
+      )}
+
+      {!isCompiling && !isStarted && (
+        <div style={{
+          position: 'absolute', inset: 0,
+          zIndex: 1003, background: 'rgba(0,0,0,0.8)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'
+        }}>
+          <button 
+            onClick={startAR} 
+            className="animate-in zoom-in"
+            style={{ 
+              padding: '1rem 2rem', background: '#34d399', color: '#1f2937', 
+              fontSize: '1.25rem', fontWeight: 'bold', borderRadius: '9999px', border: 'none', cursor: 'pointer',
+              boxShadow: '0 4px 14px 0 rgba(52, 211, 153, 0.39)'
+            }}
+          >
+            Chạm để bắt đầu AR
+          </button>
+          <p style={{ color: 'white', marginTop: '1rem', fontSize: '0.875rem', opacity: 0.8 }}>
+            (Cần chạm để bật quyền phát nhạc)
+          </p>
         </div>
       )}
 
