@@ -10,18 +10,6 @@ import Step4AREditor from './Step4AREditor';
 import Step5Summary from './Step5Summary';
 import { useDesign, useDesignDispatch } from '../store/DesignContext';
 import { useCartDispatch } from '../store/CartContext';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronUp, ChevronDown } from 'lucide-react';
-import LeftColumnPreview from './LeftColumnPreview';
-import Step1Upload from './Step1Upload';
-import Step2FrameSize from './Step2FrameSize';
-import Step3ARSelection from './Step3ARSelection';
-import Step4MusicSelection from './Step4MusicSelection';
-import Step4AREditor from './Step4AREditor';
-import Step5Summary from './Step5Summary';
-import { useDesign, useDesignDispatch } from '../store/DesignContext';
-import { useCartDispatch } from '../store/CartContext';
 import { loadDraft, clearDraft } from '../store/draftService';
 
 export default function DesignPage() {
