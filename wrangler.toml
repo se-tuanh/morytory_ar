@@ -1,0 +1,7 @@
+name = "morytory-ar"
+pages_build_output_dir = "./dist"
+compatibility_date = "2024-06-18"
+
+[[kv_namespaces]]
+binding = "MORYTORY_ORDERS"
+id = "cb7d0193402d463caba6f086203e0b0c"
