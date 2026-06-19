@@ -2,8 +2,8 @@ import { useDesign, useDesignDispatch } from '../store/DesignContext';
 
 const MUSIC_OPTIONS = [
   { id: null, name: 'Không dùng nhạc', desc: 'Chỉ phát hiệu ứng hình ảnh' },
-  { id: 'https://upload.wikimedia.org/wikipedia/commons/4/43/Happy_Birthday_to_You_%28Vocal%29.mp3', name: 'Happy Birthday', desc: 'Nhạc chúc mừng sinh nhật (Vocal)' },
-  { id: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Chopin_-_Nocturne_Op_9_No_2_E_Flat_Major.mp3', name: 'Nhạc Piano thư giãn', desc: 'Chopin - Nocturne Op 9 No 2' },
+  { id: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', name: 'Nhạc nền Sôi động', desc: 'Nhạc điện tử sôi động' },
+  { id: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', name: 'Nhạc nền Thư giãn', desc: 'Giai điệu thư giãn nhẹ nhàng' },
 ];
 
 export default function Step4MusicSelection() {
