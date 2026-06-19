@@ -35,10 +35,6 @@ export default function DesignPage() {
   };
 
   const handleAddToCart = async () => {
-    if (!photoPreviewUrl) {
-      alert("Vui lòng tải ảnh lên trước!");
-      return;
-    }
     const newItem = {
       id: Math.random().toString(36).substr(2, 9),
       photoPreviewUrl,

@@ -36,7 +36,7 @@ export default function Step1Upload() {
   return (
     <div className="space-y-4">
       <h3 className="text-xl font-semibold text-brand-text">1. Tải ảnh lên</h3>
-      <p className="text-sm text-gray-500">Bức ảnh này sẽ được dùng để quét AR (Bắt buộc).</p>
+      <p className="text-sm text-gray-500">Bức ảnh này sẽ được dùng để quét AR (Không bắt buộc - Hệ thống sẽ dùng ảnh mặc định nếu bỏ qua).</p>
 
       {/* Upload Box */}
       <div className="space-y-2">

@@ -42,7 +42,7 @@ export default function ARRoute() {
 
   return (
     <ARViewer 
-      composedImage={orderData.targetImage} 
+      composedImage={orderData.targetImage || '/default-target.png'} 
       effect={orderData.effect} 
       overlayText={orderData.overlayText}
       overlayFont={orderData.overlayFont}

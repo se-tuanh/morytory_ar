@@ -19,7 +19,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
     try {
       const results = await Promise.all(cartItems.map(async (item) => {
         const newOrderId = Math.random().toString(36).substr(2, 9).toUpperCase();
-        const compressedImage = await resizeImageForAR(item.photoPreviewUrl);
+        const compressedImage = item.photoPreviewUrl ? await resizeImageForAR(item.photoPreviewUrl) : '';
 
         const response = await fetch('/api/orders', {
           method: 'POST',
@@ -99,7 +99,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
               {orderIds.map((order) => (
                 <div key={order.id} className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex flex-col items-center">
                   <div className="flex items-center gap-3 w-full mb-3">
-                     <img src={order.previewUrl} alt="Preview" className="w-10 h-10 object-cover rounded-md" />
+                     <img src={order.previewUrl || '/default-target.png'} alt="Preview" className="w-10 h-10 object-cover rounded-md" />
                      <div>
                        <p className="text-xs font-semibold">Mã: #{order.id}</p>
                        <p className="text-xs text-gray-500">Khung {order.frameSize} cm</p>
