@@ -8,7 +8,7 @@ export default function Step4AREditor() {
 
   return (
     <div className="space-y-6 animate-in slide-in-from-top-4 fade-in duration-300">
-      <h3 className="text-xl font-semibold text-brand-text">4. Tùy chỉnh thông điệp</h3>
+      <h3 className="text-xl font-semibold text-brand-text">5. Tùy chỉnh thông điệp</h3>
       
       <div className="space-y-4 bg-[#FAF7F2] p-4 rounded-xl border border-brand-wood/20">
         <div>

@@ -3,7 +3,8 @@ export const initialState = {
   photo: null,           // File object
   photoPreviewUrl: null, // URL.createObjectURL result
   frameSize: '10x15',    // Default
-  selectedAREffect: null, // 'snow' | 'sparkle' | 'petals' | null
+  selectedAREffect: null, // 'snow' | 'sparkle' | 'petals' | 'balloon-3d' | null
+  music: null,           // music url or null
   overlay: { text: '', fontStyle: 'serif', fontSize: 16 },
   pricing: { base: 35000, arAddon: 5000, total: 35000 },
 };
@@ -16,7 +17,8 @@ const getBasePrice = (size) => {
 
 const calculateTotal = (size, arEffect) => {
   const base = getBasePrice(size);
-  return arEffect ? base + 5000 : base;
+  if (!arEffect) return base;
+  return arEffect === 'balloon-3d' ? base + 15000 : base + 5000;
 };
 
 export function designReducer(state, action) {
@@ -49,6 +51,8 @@ export function designReducer(state, action) {
         pricing: { ...state.pricing, total }
       };
     }
+    case 'SET_MUSIC':
+      return { ...state, music: action.payload };
     case 'SET_OVERLAY_TEXT':
       return { ...state, overlay: { ...state.overlay, text: action.payload } };
     case 'SET_OVERLAY_FONT_STYLE':

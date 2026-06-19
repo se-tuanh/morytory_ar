@@ -28,7 +28,7 @@ export async function onRequestGet(context) {
 export async function onRequestPost(context) {
   try {
     const data = await context.request.json();
-    const { orderId, targetImage, effect, overlayText, overlayFont, overlayFontSize, createdAt } = data;
+    const { orderId, targetImage, effect, music, overlayText, overlayFont, overlayFontSize, createdAt } = data;
 
     if (!orderId || !targetImage) {
       return new Response(JSON.stringify({ error: 'Missing orderId or targetImage' }), { status: 400 });
@@ -39,6 +39,7 @@ export async function onRequestPost(context) {
       orderId,
       targetImage,
       effect: effect || 'snow',
+      music: music || null,
       overlayText: overlayText || '',
       overlayFont: overlayFont || 'serif',
       overlayFontSize: overlayFontSize || 16,

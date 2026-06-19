@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
+import { QRCodeCanvas } from 'qrcode.react';
 import { X, CheckCircle, Smartphone } from 'lucide-react';
 import { resizeImageForAR } from '../utils/imageUtils';
 import { useCartDispatch } from '../store/CartContext';
@@ -11,6 +11,19 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
   const dispatch = useCartDispatch();
 
   if (!isOpen) return null;
+
+  const handleDownloadQR = (orderId) => {
+    const canvas = document.getElementById(`qr-${orderId}`);
+    if (canvas) {
+      const pngUrl = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+      const downloadLink = document.createElement('a');
+      downloadLink.href = pngUrl;
+      downloadLink.download = `QR_MoryTory_${orderId}.png`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }
+  };
 
   const handleCheckout = async (e) => {
     e.preventDefault();
@@ -30,6 +43,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
             orderId: newOrderId,
             targetImage: compressedImage,
             effect: item.selectedAREffect || 'snow',
+            music: item.music || null,
             overlayText: item.overlay?.text || '',
             overlayFont: item.overlay?.fontStyle || 'serif',
             overlayFontSize: item.overlay?.fontSize || 16,
@@ -106,15 +120,22 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
                      </div>
                   </div>
                   <div className="bg-white p-3 rounded-xl shadow-sm border border-gray-100 inline-block">
-                    <QRCodeSVG 
+                    <QRCodeCanvas 
+                      id={`qr-${order.id}`}
                       value={`${window.location.origin}/ar?orderId=${order.id}&t=${Date.now()}`} 
                       size={120} 
                       level="H" 
                       includeMargin={true}
                     />
                   </div>
+                  <button 
+                    onClick={() => handleDownloadQR(order.id)}
+                    className="mt-3 text-xs bg-brand-wood text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition-colors shadow-sm"
+                  >
+                    Tải mã QR
+                  </button>
                   <p className="text-[10px] text-gray-400 mt-2 text-center">
-                    QR này sẽ được in sau khung
+                    Mã này sẽ được Studio in phía sau khung
                   </p>
                 </div>
               ))}

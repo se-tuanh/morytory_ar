@@ -44,6 +44,7 @@ export default function ARRoute() {
     <ARViewer 
       composedImage={orderData.targetImage || '/default-target.png'} 
       effect={orderData.effect} 
+      music={orderData.music}
       overlayText={orderData.overlayText}
       overlayFont={orderData.overlayFont}
       onBack={() => navigate('/')} 

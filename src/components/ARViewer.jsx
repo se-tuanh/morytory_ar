@@ -19,10 +19,12 @@ const createTextSvg = (text, font) => {
   return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}`;
 };
 
-export const ARViewer = ({ composedImage, effect, overlayText, overlayFont, onBack }) => {
+export const ARViewer = ({ composedImage, effect, music, overlayText, overlayFont, onBack }) => {
   const [mindFileUrl, setMindFileUrl] = useState(null);
   const [progress, setProgress] = useState(0);
   const [isCompiling, setIsCompiling] = useState(true);
+  const targetRef = useRef(null);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     let url = null;
@@ -56,8 +58,37 @@ export const ARViewer = ({ composedImage, effect, overlayText, overlayFont, onBa
     };
   }, [composedImage]);
 
+  useEffect(() => {
+    const target = targetRef.current;
+    if (!target || !music) return;
+
+    const playAudio = () => {
+      if (audioRef.current) {
+        audioRef.current.play().catch(e => console.log('Autoplay blocked', e));
+      }
+    };
+    
+    const pauseAudio = () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+
+    target.addEventListener('targetFound', playAudio);
+    target.addEventListener('targetLost', pauseAudio);
+
+    return () => {
+      target.removeEventListener('targetFound', playAudio);
+      target.removeEventListener('targetLost', pauseAudio);
+    };
+  }, [music, mindFileUrl]);
+
   return (
     <div id="ar-container" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1000, background: '#000' }}>
+      {music && (
+        <audio ref={audioRef} src={music} loop preload="auto" />
+      )}
+      
       <div id="mobile-debug" style={{ position: 'absolute', top: 10, left: 10, color: 'lime', zIndex: 9999, fontSize: '10px', pointerEvents: 'none', background: 'rgba(0,0,0,0.5)', padding: '5px' }}>
         Status: {isCompiling ? 'Compiling' : 'AR Starting...'}
       </div>
@@ -81,7 +112,7 @@ export const ARViewer = ({ composedImage, effect, overlayText, overlayFont, onBa
           device-orientation-permission-ui="enabled: false"
         >
           <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-          <a-entity mindar-image-target="targetIndex: 0">
+          <a-entity mindar-image-target="targetIndex: 0" ref={targetRef}>
             {overlayText && (
               <a-image
                 src={createTextSvg(overlayText, overlayFont)}
@@ -91,6 +122,26 @@ export const ARViewer = ({ composedImage, effect, overlayText, overlayFont, onBa
                 material="transparent: true"
                 animation="property: position; to: 0 -0.25 0.1; dir: alternate; dur: 2000; loop: true; easing: easeInOutSine"
               ></a-image>
+            )}
+
+            {effect === 'balloon-3d' && (
+              <a-entity position="0 0 0.1">
+                <a-entity position="-0.4 -0.5 0" animation="property: position; to: -0.4 0.8 0; dir: alternate; dur: 3000; loop: true; easing: easeInOutSine">
+                  <a-sphere radius="0.15" color="#ef4444"></a-sphere>
+                  <a-cone position="0 -0.15 0" radius-bottom="0" radius-top="0.03" height="0.05" color="#ef4444"></a-cone>
+                  <a-cylinder position="0 -0.4 0" radius="0.005" height="0.5" color="#ffffff"></a-cylinder>
+                </a-entity>
+                <a-entity position="0.3 -0.8 0.1" animation="property: position; to: 0.3 0.6 0.1; dir: alternate; dur: 4000; loop: true; easing: easeInOutSine">
+                  <a-sphere radius="0.12" color="#3b82f6"></a-sphere>
+                  <a-cone position="0 -0.12 0" radius-bottom="0" radius-top="0.02" height="0.04" color="#3b82f6"></a-cone>
+                  <a-cylinder position="0 -0.3 0" radius="0.005" height="0.4" color="#ffffff"></a-cylinder>
+                </a-entity>
+                <a-entity position="0 -0.6 -0.1" animation="property: position; to: 0 0.7 -0.1; dir: alternate; dur: 3500; loop: true; easing: easeInOutSine">
+                  <a-sphere radius="0.18" color="#eab308"></a-sphere>
+                  <a-cone position="0 -0.18 0" radius-bottom="0" radius-top="0.03" height="0.06" color="#eab308"></a-cone>
+                  <a-cylinder position="0 -0.5 0" radius="0.005" height="0.6" color="#ffffff"></a-cylinder>
+                </a-entity>
+              </a-entity>
             )}
 
             {/* Sử dụng hệ thống Hạt (Particles) tùy chỉnh tự viết siêu nhẹ */}

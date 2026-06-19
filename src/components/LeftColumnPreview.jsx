@@ -99,6 +99,27 @@ export default function LeftColumnPreview() {
       );
     }
 
+    if (selectedAREffect === 'balloon-3d') {
+      return (
+        <div data-html2canvas-ignore="true" className="absolute inset-0 pointer-events-none z-20 flex flex-col items-center justify-end pb-8 bg-blue-900/10">
+          <div className="relative animate-bounce">
+             <div className="w-12 h-16 bg-red-500 rounded-[50%] opacity-80 border-2 border-red-600 shadow-lg relative">
+               <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-red-600 rounded-sm"></div>
+               <div className="absolute -bottom-10 left-1/2 w-0.5 h-10 bg-white/50"></div>
+             </div>
+             <div className="w-10 h-14 bg-yellow-400 rounded-[50%] opacity-80 border-2 border-yellow-500 shadow-lg absolute -right-6 top-4">
+               <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-yellow-500 rounded-sm"></div>
+               <div className="absolute -bottom-10 left-1/2 w-0.5 h-10 bg-white/50 -rotate-12 origin-top"></div>
+             </div>
+             <div className="w-10 h-14 bg-blue-400 rounded-[50%] opacity-80 border-2 border-blue-500 shadow-lg absolute -left-6 top-4">
+               <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-blue-500 rounded-sm"></div>
+               <div className="absolute -bottom-10 left-1/2 w-0.5 h-10 bg-white/50 rotate-12 origin-top"></div>
+             </div>
+          </div>
+        </div>
+      );
+    }
+
     return null;
   };
 

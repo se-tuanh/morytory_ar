@@ -28,7 +28,7 @@ __name(onRequestGet, "onRequestGet");
 async function onRequestPost(context) {
   try {
     const data = await context.request.json();
-    const { orderId, targetImage, effect, overlayText, overlayFont, overlayFontSize, createdAt } = data;
+    const { orderId, targetImage, effect, music, overlayText, overlayFont, overlayFontSize, createdAt } = data;
     if (!orderId || !targetImage) {
       return new Response(JSON.stringify({ error: "Missing orderId or targetImage" }), { status: 400 });
     }
@@ -36,6 +36,7 @@ async function onRequestPost(context) {
       orderId,
       targetImage,
       effect: effect || "snow",
+      music: music || null,
       overlayText: overlayText || "",
       overlayFont: overlayFont || "serif",
       overlayFontSize: overlayFontSize || 16,
@@ -68,7 +69,7 @@ async function onRequestOptions() {
 }
 __name(onRequestOptions, "onRequestOptions");
 
-// ../.wrangler/tmp/pages-QTX40b/functionsRoutes-0.3646229010514257.mjs
+// ../.wrangler/tmp/pages-ZcKI09/functionsRoutes-0.8133543229514424.mjs
 var routes = [
   {
     routePath: "/api/orders",

@@ -5,6 +5,7 @@ import LeftColumnPreview from './LeftColumnPreview';
 import Step1Upload from './Step1Upload';
 import Step2FrameSize from './Step2FrameSize';
 import Step3ARSelection from './Step3ARSelection';
+import Step4MusicSelection from './Step4MusicSelection';
 import Step4AREditor from './Step4AREditor';
 import Step5Summary from './Step5Summary';
 import { useDesign, useDesignDispatch } from '../store/DesignContext';
@@ -15,7 +16,7 @@ export default function DesignPage() {
   const navigate = useNavigate();
   const [isPreviewCollapsed, setIsPreviewCollapsed] = useState(false);
   const [draftExists, setDraftExists] = useState(null);
-  const { selectedAREffect, photoPreviewUrl, overlay, frameSize, pricing, photo } = useDesign();
+  const { selectedAREffect, photoPreviewUrl, overlay, frameSize, pricing, photo, music } = useDesign();
   const designDispatch = useDesignDispatch();
   const cartDispatch = useCartDispatch();
 
@@ -41,6 +42,7 @@ export default function DesignPage() {
       photo,
       frameSize,
       selectedAREffect,
+      music,
       overlay,
       pricing
     };
@@ -113,6 +115,7 @@ export default function DesignPage() {
           <Step1Upload />
           <Step2FrameSize />
           <Step3ARSelection />
+          <Step4MusicSelection />
           <Step4AREditor />
         </div>
       </div>
