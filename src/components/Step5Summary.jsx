@@ -18,10 +18,10 @@ export default function Step5Summary({ onOrder, buttonText = "Đặt hàng ngay"
         <button 
           onClick={onOrder}
           disabled={disabled}
-          className={`px-8 py-3 font-semibold rounded-full shadow transition-colors ${
+          className={`px-10 py-3 font-semibold rounded shadow transition-all ${
             disabled 
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed shadow-none' 
-              : 'bg-brand-accent-green text-white hover:bg-[#7a9352]'
+              ? 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-none' 
+              : 'bg-brand-wood text-white hover:bg-opacity-90 hover:shadow-md'
           }`}
         >
           {buttonText}

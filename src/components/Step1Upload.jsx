@@ -1,15 +1,19 @@
 import { useState } from 'react';
-import { UploadCloud } from 'lucide-react';
+import { UploadCloud, Image as ImageIcon, Box } from 'lucide-react';
 import { useDesign, useDesignDispatch } from '../store/DesignContext';
 import { validateImage, revokePreviewUrl } from '../utils/fileUtils';
 
 export default function Step1Upload() {
-  const { isPrintingPhoto, photoPreviewUrl } = useDesign();
+  const { isPrintingPhoto, photoPreviewUrl, purchaseMode } = useDesign();
   const dispatch = useDesignDispatch();
   const [error, setError] = useState('');
 
   const handleToggle = (checked) => {
     dispatch({ type: 'SET_PRINTING_PHOTO', payload: checked });
+  };
+
+  const handleModeSelect = (mode) => {
+    dispatch({ type: 'SET_PURCHASE_MODE', payload: mode });
   };
 
   const handleFileChange = (e) => {
@@ -34,12 +38,43 @@ export default function Step1Upload() {
   };
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-xl font-semibold text-brand-text">1. Tải ảnh lên</h3>
-      <p className="text-sm text-gray-500">Bức ảnh này sẽ được dùng để quét AR (Không bắt buộc - Hệ thống sẽ dùng ảnh mặc định nếu bỏ qua).</p>
+    <div className="space-y-6">
+      <h3 className="text-xl font-serif font-bold text-brand-text">1. Chọn Sản Phẩm & Hình Ảnh</h3>
+      
+      {/* Mode Selection Tabs */}
+      <div className="grid grid-cols-2 gap-3">
+        <button
+          onClick={() => handleModeSelect('ar_frame')}
+          className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${
+            purchaseMode === 'ar_frame'
+              ? 'border-brand-wood bg-brand-wood/5 shadow-sm'
+              : 'border-transparent bg-gray-50 hover:bg-gray-100 text-gray-500'
+          }`}
+        >
+          <ImageIcon className={`w-6 h-6 mb-2 ${purchaseMode === 'ar_frame' ? 'text-brand-wood' : ''}`} />
+          <span className={`font-semibold text-sm md:text-base ${purchaseMode === 'ar_frame' ? 'text-brand-wood' : ''}`}>Khung & AR</span>
+        </button>
+        <button
+          onClick={() => handleModeSelect('frame_only')}
+          className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${
+            purchaseMode === 'frame_only'
+              ? 'border-brand-wood bg-brand-wood/5 shadow-sm'
+              : 'border-transparent bg-gray-50 hover:bg-gray-100 text-gray-500'
+          }`}
+        >
+          <Box className={`w-6 h-6 mb-2 ${purchaseMode === 'frame_only' ? 'text-brand-wood' : ''}`} />
+          <span className={`font-semibold text-sm md:text-base ${purchaseMode === 'frame_only' ? 'text-brand-wood' : ''}`}>Chỉ mua khung</span>
+        </button>
+      </div>
 
-      {/* Upload Box */}
-      <div className="space-y-2">
+      <div className="space-y-2 pt-2">
+        <p className="text-sm text-gray-500">
+          {purchaseMode === 'ar_frame' 
+            ? 'Bức ảnh này sẽ dùng để tạo hiệu ứng AR (Bắt buộc).' 
+            : 'Tải ảnh lên nếu bạn muốn in kèm khung (Tùy chọn).'}
+        </p>
+
+        {/* Upload Box */}
         <div className="border-2 border-dashed border-brand-wood/30 rounded-xl p-8 text-center hover:bg-brand-wood/5 transition-colors cursor-pointer relative group bg-white">
           <input 
             type="file" 

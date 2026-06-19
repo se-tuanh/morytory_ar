@@ -8,11 +8,11 @@ export default {
     extend: {
       colors: {
         brand: {
-          wood: '#8B5A2B',
-          'accent-green': '#88A45C',
-          'accent-beige': '#F6E5D5',
-          bg: '#FAF7F2',
-          text: '#000000',
+          wood: '#5C4A3D',
+          'accent-green': '#6B7F4B',
+          'accent-beige': '#E8E1D5',
+          bg: '#FAF8F5',
+          text: '#2C241B',
         }
       },
       fontFamily: {

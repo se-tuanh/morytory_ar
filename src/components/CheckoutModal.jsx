@@ -32,6 +32,16 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
     try {
       const results = await Promise.all(cartItems.map(async (item) => {
         const newOrderId = Math.random().toString(36).substr(2, 9).toUpperCase();
+        
+        if (item.purchaseMode === 'frame_only') {
+          return {
+            id: newOrderId,
+            frameSize: item.frameSize,
+            previewUrl: item.photoPreviewUrl,
+            purchaseMode: 'frame_only'
+          };
+        }
+
         const compressedImage = item.photoPreviewUrl ? await resizeImageForAR(item.photoPreviewUrl) : '';
 
         const response = await fetch('/api/orders', {
@@ -59,7 +69,8 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
         return {
           id: newOrderId,
           frameSize: item.frameSize,
-          previewUrl: item.photoPreviewUrl
+          previewUrl: item.photoPreviewUrl,
+          purchaseMode: 'ar_frame'
         };
       }));
 
@@ -120,24 +131,33 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
                        <p className="text-xs text-gray-500">Khung {order.frameSize} cm</p>
                      </div>
                   </div>
-                  <div className="bg-white p-3 rounded-xl shadow-sm border border-gray-100 inline-block">
-                    <QRCodeCanvas 
-                      id={`qr-${order.id}`}
-                      value={`${window.location.origin}/ar?orderId=${order.id}&t=${Date.now()}`} 
-                      size={120} 
-                      level="H" 
-                      includeMargin={true}
-                    />
-                  </div>
-                  <button 
-                    onClick={() => handleDownloadQR(order.id)}
-                    className="mt-3 text-xs bg-brand-wood text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition-colors shadow-sm"
-                  >
-                    Tải mã QR
-                  </button>
-                  <p className="text-[10px] text-gray-400 mt-2 text-center">
-                    Mã này sẽ được Studio in phía sau khung
-                  </p>
+                  {order.purchaseMode === 'ar_frame' ? (
+                    <>
+                      <div className="bg-white p-3 rounded-xl shadow-sm border border-gray-100 inline-block">
+                        <QRCodeCanvas 
+                          id={`qr-${order.id}`}
+                          value={`${window.location.origin}/ar?orderId=${order.id}&t=${Date.now()}`} 
+                          size={120} 
+                          level="H" 
+                          includeMargin={true}
+                        />
+                      </div>
+                      <button 
+                        onClick={() => handleDownloadQR(order.id)}
+                        className="mt-3 text-xs bg-brand-wood text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition-colors shadow-sm"
+                      >
+                        Tải mã QR
+                      </button>
+                      <p className="text-[10px] text-gray-400 mt-2 text-center">
+                        Mã này sẽ được Studio in phía sau khung
+                      </p>
+                    </>
+                  ) : (
+                    <div className="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center justify-center h-[146px] w-[146px] text-gray-400">
+                      <p className="text-xs text-center font-medium">Chỉ mua khung</p>
+                      <p className="text-[10px] text-center mt-1">(Không có AR)</p>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

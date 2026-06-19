@@ -1,4 +1,5 @@
 export const initialState = {
+  purchaseMode: 'ar_frame', // 'ar_frame' | 'frame_only'
   isPrintingPhoto: false,
   photo: null,           // File object
   photoPreviewUrl: null, // URL.createObjectURL result
@@ -23,6 +24,8 @@ const calculateTotal = (size, arEffect) => {
 
 export function designReducer(state, action) {
   switch (action.type) {
+    case 'SET_PURCHASE_MODE':
+      return { ...state, purchaseMode: action.payload };
     case 'SET_PRINTING_PHOTO': {
       const isPrintingPhoto = action.payload;
       return { 

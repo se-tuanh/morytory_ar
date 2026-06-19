@@ -39,11 +39,11 @@ export default function HomePage() {
           <div className="pt-8">
             <button
               onClick={() => navigate('/design')}
-              className="px-8 py-4 bg-brand-accent-green text-white text-lg font-semibold rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 hover:bg-[#7a9352] transition-all duration-300 ease-in-out inline-flex items-center gap-2"
+              className="px-10 py-4 bg-brand-wood text-white text-lg rounded shadow-md hover:shadow-lg hover:bg-opacity-90 transition-all duration-300 ease-in-out inline-flex items-center gap-2"
             >
-              Bắt Đầu Thiết Kế Khung Ảnh
+              Bắt Đầu Thiết Kế
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </button>
           </div>
