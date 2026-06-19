@@ -47,6 +47,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
             overlayText: item.overlay?.text || '',
             overlayFont: item.overlay?.fontStyle || 'serif',
             overlayFontSize: item.overlay?.fontSize || 16,
+            overlayTextEffect: item.overlay?.textEffect || 'normal',
             createdAt: new Date().toISOString()
           })
         });

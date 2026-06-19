@@ -38,16 +38,29 @@ export default function Step4AREditor() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-brand-text mb-1">Cỡ chữ: {overlay.fontSize}px</label>
-            <input 
-              type="range" 
-              min="12" 
-              max="48" 
-              value={overlay.fontSize}
-              onChange={(e) => dispatch({ type: 'SET_OVERLAY_FONT_SIZE', payload: parseInt(e.target.value) })}
-              className="w-full mt-2 accent-brand-accent-green"
-            />
+            <label className="block text-sm font-medium text-brand-text mb-1">Hiệu ứng hiển thị AR</label>
+            <select 
+              value={overlay.textEffect}
+              onChange={(e) => dispatch({ type: 'SET_OVERLAY_TEXT_EFFECT', payload: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-accent-green outline-none bg-white"
+            >
+              <option value="normal">Bình thường</option>
+              <option value="neon">Chữ Neon 3D</option>
+              <option value="typewriter">Gõ chữ (Typewriter)</option>
+            </select>
           </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-brand-text mb-1">Cỡ chữ: {overlay.fontSize}px</label>
+          <input 
+            type="range" 
+            min="12" 
+            max="48" 
+            value={overlay.fontSize}
+            onChange={(e) => dispatch({ type: 'SET_OVERLAY_FONT_SIZE', payload: parseInt(e.target.value) })}
+            className="w-full mt-2 accent-brand-accent-green"
+          />
         </div>
         
         <p className="text-xs text-amber-900/60 italic mt-2">

@@ -1,31 +1,48 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-const createTextSvg = (text, font) => {
-  const isSerif = font === 'serif';
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200">
-    <style>
-      .text {
-        font-family: ${isSerif ? '"Playfair Display", serif' : 'system-ui, sans-serif'};
-        font-size: 60px;
-        fill: #ffffff;
-        text-anchor: middle;
-        dominant-baseline: middle;
-        font-weight: bold;
-        filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.8));
+const createTextSvg = (text, font, effect) => {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  context.font = `bold 60px ${font}`;
+  const textMetrics = context.measureText(text);
+  const width = Math.max(textMetrics.width + 60, 300);
+  
+  let styles = `
+    .text { font-family: ${font}, serif; font-size: 60px; font-weight: bold; fill: #ffffff; text-anchor: middle; dominant-baseline: middle; filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.5)); }
+  `;
+
+  if (effect === 'neon') {
+    styles = `
+      .text { 
+        font-family: ${font}, serif; 
+        font-size: 60px; 
+        font-weight: bold; 
+        fill: #ffffff; 
+        text-anchor: middle; 
+        dominant-baseline: middle; 
+        filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #fff) drop-shadow(0 0 20px #f09) drop-shadow(0 0 30px #f09) drop-shadow(0 0 40px #f09);
       }
-    </style>
-    <text x="400" y="100" class="text">${text}</text>
+    `;
+  }
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="120">
+    <style>${styles}</style>
+    <text x="50%" y="55%" class="text">${text}</text>
   </svg>`;
   return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}`;
 };
 
-export const ARViewer = ({ composedImage, effect, music, overlayText, overlayFont, onBack }) => {
+export const ARViewer = ({ composedImage, effect, music, overlayText, overlayFont, overlayTextEffect, onBack }) => {
   const [mindFileUrl, setMindFileUrl] = useState(null);
   const [progress, setProgress] = useState(0);
   const [isCompiling, setIsCompiling] = useState(true);
   const [isStarted, setIsStarted] = useState(false);
   const targetRef = useRef(null);
   const audioRef = useRef(null);
+  
+  // For Typewriter effect
+  const [displayedText, setDisplayedText] = useState(overlayTextEffect === 'typewriter' ? '' : overlayText);
+  const isTracking = useRef(false);
 
   useEffect(() => {
     let url = null;
@@ -70,15 +87,17 @@ export const ARViewer = ({ composedImage, effect, music, overlayText, overlayFon
 
   useEffect(() => {
     const target = targetRef.current;
-    if (!target || !music) return;
+    if (!target) return;
 
     const playAudio = () => {
+      isTracking.current = true;
       if (audioRef.current) {
         audioRef.current.play().catch(e => console.log('Autoplay blocked', e));
       }
     };
     
     const pauseAudio = () => {
+      isTracking.current = false;
       if (audioRef.current) {
         audioRef.current.pause();
       }
@@ -92,6 +111,52 @@ export const ARViewer = ({ composedImage, effect, music, overlayText, overlayFon
       target.removeEventListener('targetLost', pauseAudio);
     };
   }, [music, mindFileUrl, isStarted]);
+
+  // Typewriter effect logic
+  useEffect(() => {
+    if (overlayTextEffect !== 'typewriter' || !overlayText) {
+      setDisplayedText(overlayText);
+      return;
+    }
+
+    let i = 0;
+    let typingInterval;
+
+    const startTyping = () => {
+      i = 0;
+      setDisplayedText('');
+      typingInterval = setInterval(() => {
+        if (i < overlayText.length) {
+          setDisplayedText(overlayText.substring(0, i + 1));
+          i++;
+        } else {
+          clearInterval(typingInterval);
+          // Restart after 5 seconds
+          setTimeout(() => {
+             if (isTracking.current) startTyping();
+          }, 5000);
+        }
+      }, 150);
+    };
+
+    const target = targetRef.current;
+    if (!target) return;
+
+    const handleFound = () => startTyping();
+    const handleLost = () => {
+      clearInterval(typingInterval);
+      setDisplayedText('');
+    };
+
+    target.addEventListener('targetFound', handleFound);
+    target.addEventListener('targetLost', handleLost);
+
+    return () => {
+      clearInterval(typingInterval);
+      target.removeEventListener('targetFound', handleFound);
+      target.removeEventListener('targetLost', handleLost);
+    };
+  }, [overlayText, overlayTextEffect, isStarted]);
 
   return (
     <div id="ar-container" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1000, background: '#000' }}>
@@ -145,14 +210,14 @@ export const ARViewer = ({ composedImage, effect, music, overlayText, overlayFon
         >
           <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
           <a-entity mindar-image-target="targetIndex: 0" ref={targetRef}>
-            {overlayText && (
+            {displayedText && (
               <a-image
-                src={createTextSvg(overlayText, overlayFont)}
+                src={createTextSvg(displayedText, overlayFont, overlayTextEffect)}
                 position="0 -0.3 0.1"
                 width="1.2"
                 height="0.3"
                 material="transparent: true"
-                animation="property: position; to: 0 -0.25 0.1; dir: alternate; dur: 2000; loop: true; easing: easeInOutSine"
+                animation={overlayTextEffect === 'neon' ? "property: material.opacity; from: 0.8; to: 1; dir: alternate; dur: 100; loop: true" : "property: position; to: 0 -0.25 0.1; dir: alternate; dur: 2000; loop: true; easing: easeInOutSine"}
               ></a-image>
             )}
 
@@ -176,16 +241,12 @@ export const ARViewer = ({ composedImage, effect, music, overlayText, overlayFon
               </a-entity>
             )}
 
-            {/* Sử dụng hệ thống Hạt (Particles) tùy chỉnh tự viết siêu nhẹ */}
-            {effect === 'snow' && (
-              <a-entity custom-particles="type: snow; count: 100; size: 0.05"></a-entity>
-            )}
-            {(effect === 'leaves' || effect === 'petals') && (
-              <a-entity custom-particles={`type: ${effect}; count: 50; size: 0.1`}></a-entity>
-            )}
-            {(effect === 'sparkle' || effect === 'fireworks') && (
-              <a-entity custom-particles={`type: ${effect}; count: 80; size: 0.05`}></a-entity>
-            )}
+            {/* Particle Systems */}
+            {effect === 'snow' && <a-entity custom-particles="type: snow; count: 100; size: 0.05"></a-entity>}
+            {(effect === 'leaves' || effect === 'petals') && <a-entity custom-particles={`type: ${effect}; count: 50; size: 0.1`}></a-entity>}
+            {(effect === 'sparkle' || effect === 'fireworks') && <a-entity custom-particles={`type: ${effect}; count: 80; size: 0.05`}></a-entity>}
+            {effect === 'butterflies' && <a-entity custom-particles="type: butterflies; count: 8; size: 0.1"></a-entity>}
+            {effect === 'fireflies' && <a-entity custom-particles="type: fireflies; count: 30; size: 0.03"></a-entity>}
           </a-entity>
         </a-scene>
       )}

@@ -5,7 +5,7 @@ export const initialState = {
   frameSize: '10x15',    // Default
   selectedAREffect: null, // 'snow' | 'sparkle' | 'petals' | 'balloon-3d' | null
   music: null,           // music url or null
-  overlay: { text: '', fontStyle: 'serif', fontSize: 16 },
+  overlay: { text: '', fontStyle: 'serif', fontSize: 16, textEffect: 'normal' },
   pricing: { base: 35000, arAddon: 5000, total: 35000 },
 };
 
@@ -59,6 +59,8 @@ export function designReducer(state, action) {
       return { ...state, overlay: { ...state.overlay, fontStyle: action.payload } };
     case 'SET_OVERLAY_FONT_SIZE':
       return { ...state, overlay: { ...state.overlay, fontSize: action.payload } };
+    case 'SET_OVERLAY_TEXT_EFFECT':
+      return { ...state, overlay: { ...state.overlay, textEffect: action.payload } };
     case 'LOAD_DRAFT':
       return { ...state, ...action.payload };
     case 'RESET_DESIGN':

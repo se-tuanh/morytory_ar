@@ -47,6 +47,7 @@ export default function ARRoute() {
       music={orderData.music}
       overlayText={orderData.overlayText}
       overlayFont={orderData.overlayFont}
+      overlayTextEffect={orderData.overlayTextEffect}
       onBack={() => navigate('/')} 
     />
   );
