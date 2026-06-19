@@ -91,7 +91,7 @@ export const ARViewer = ({ composedImage, effect, music, overlayText, overlayFon
       target.removeEventListener('targetFound', playAudio);
       target.removeEventListener('targetLost', pauseAudio);
     };
-  }, [music, mindFileUrl]);
+  }, [music, mindFileUrl, isStarted]);
 
   return (
     <div id="ar-container" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1000, background: '#000' }}>
@@ -135,7 +135,7 @@ export const ARViewer = ({ composedImage, effect, music, overlayText, overlayFon
         </div>
       )}
 
-      {!isCompiling && mindFileUrl && (
+      {isStarted && mindFileUrl && (
         <a-scene 
           mindar-image={`imageTargetSrc: ${mindFileUrl}; autoStart: true; uiLoading: no; uiError: no; uiScanning: no`}
           color-space="sRGB" 

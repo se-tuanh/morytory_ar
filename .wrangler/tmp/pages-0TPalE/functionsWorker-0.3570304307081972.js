@@ -69,7 +69,7 @@ async function onRequestOptions() {
 }
 __name(onRequestOptions, "onRequestOptions");
 
-// ../.wrangler/tmp/pages-527WYC/functionsRoutes-0.12358303095439749.mjs
+// ../.wrangler/tmp/pages-0TPalE/functionsRoutes-0.006127115617318268.mjs
 var routes = [
   {
     routePath: "/api/orders",
