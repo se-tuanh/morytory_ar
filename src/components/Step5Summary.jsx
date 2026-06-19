@@ -1,6 +1,6 @@
 import { useDesign } from '../store/DesignContext';
 
-export default function Step5Summary({ onOrder, buttonText = "Đặt hàng ngay" }) {
+export default function Step5Summary({ onOrder, buttonText = "Đặt hàng ngay", disabled = false }) {
   const { pricing, selectedAREffect } = useDesign();
 
   return (
@@ -17,7 +17,12 @@ export default function Step5Summary({ onOrder, buttonText = "Đặt hàng ngay"
         
         <button 
           onClick={onOrder}
-          className="px-8 py-3 bg-brand-accent-green text-white font-semibold rounded-full shadow hover:bg-[#7a9352] transition-colors"
+          disabled={disabled}
+          className={`px-8 py-3 font-semibold rounded-full shadow transition-colors ${
+            disabled 
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed shadow-none' 
+              : 'bg-brand-accent-green text-white hover:bg-[#7a9352]'
+          }`}
         >
           {buttonText}
         </button>

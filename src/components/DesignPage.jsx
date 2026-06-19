@@ -121,7 +121,11 @@ export default function DesignPage() {
       </div>
 
       {/* Summary Bar */}
-      <Step5Summary onOrder={handleAddToCart} buttonText="Thêm vào giỏ hàng" />
+      <Step5Summary 
+        onOrder={handleAddToCart} 
+        buttonText={!photoPreviewUrl ? "Vui lòng tải ảnh lên" : "Thêm vào giỏ hàng"} 
+        disabled={!photoPreviewUrl} 
+      />
     </div>
   );
 }
