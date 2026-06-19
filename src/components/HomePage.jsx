@@ -8,14 +8,24 @@ export default function HomePage() {
     <div className="min-h-screen flex flex-col bg-brand-bg text-brand-text font-sans">
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 bg-brand-bg/90 backdrop-blur-md border-b border-brand-wood/20 px-6 py-4 flex justify-between items-center shadow-sm">
-        <div className="text-2xl font-serif font-bold text-brand-wood tracking-wide">
-          MoryTory
+        <div className="flex items-center gap-4">
+          <img src="/logo.png" alt="MoryTory Logo" className="h-10 w-10 object-contain rounded-full" />
+          <div className="text-2xl font-serif font-bold text-brand-wood tracking-wide">
+            MoryTory
+          </div>
         </div>
-        <div className="relative cursor-pointer hover:text-brand-wood transition-colors">
-          <ShoppingCart className="w-6 h-6" />
-          <span className="absolute -top-2 -right-2 bg-brand-accent-green text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
-            0
-          </span>
+        <div className="flex items-center gap-6">
+          <a href="https://www.facebook.com/profile.php?id=61590697139502" target="_blank" rel="noopener noreferrer" className="text-brand-wood hover:opacity-80 transition-opacity">
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
+            </svg>
+          </a>
+          <div className="relative cursor-pointer hover:text-brand-wood transition-colors">
+            <ShoppingCart className="w-6 h-6" />
+            <span className="absolute -top-2 -right-2 bg-brand-accent-green text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+              0
+            </span>
+          </div>
         </div>
       </header>
 
