@@ -118,6 +118,10 @@ export default function Step4MusicSelection() {
         accept="audio/*" 
         className="hidden" 
       />
+
+      <p className="text-xs text-gray-500 mt-2">
+        Chưa có nhạc sẵn? <a href="https://pixabay.com/music/" target="_blank" rel="noopener noreferrer" className="text-brand-accent-green hover:underline">Tìm nhạc miễn phí tại đây (Pixabay)</a>
+      </p>
     </div>
   );
 }
