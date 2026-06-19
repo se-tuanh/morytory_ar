@@ -22,7 +22,10 @@ export default function Step4MusicSelection() {
     const file = e.target.files[0];
     if (!file) return;
 
-    if (!file.type.startsWith('audio/')) {
+    const isAudioType = file.type.startsWith('audio/');
+    const isAudioExtension = /\.(mp3|wav|m4a|aac|ogg)$/i.test(file.name);
+
+    if (!isAudioType && !isAudioExtension) {
       alert('Vui lòng chọn một file âm thanh (vd: mp3).');
       return;
     }
@@ -115,7 +118,7 @@ export default function Step4MusicSelection() {
         type="file" 
         ref={fileInputRef} 
         onChange={handleFileChange}
-        accept="audio/*" 
+        accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg" 
         className="hidden" 
       />
 
