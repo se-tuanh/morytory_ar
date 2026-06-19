@@ -3,10 +3,10 @@ import { useDesign } from '../store/DesignContext';
 export default function LeftColumnPreview() {
   const { photoPreviewUrl, overlay, frameSize, isPrintingPhoto, selectedAREffect } = useDesign();
   
-  const containerClasses = `relative border-8 border-[#5D4037] bg-white rounded-md shadow-2xl p-2 transition-all duration-500 ease-in-out flex items-center justify-center overflow-hidden mx-auto
-    ${frameSize === '10x15' ? 'w-[200px] h-[300px] md:w-[266px] md:h-[400px]' : ''}
-    ${frameSize === '13x18' ? 'w-[230px] h-[318px] md:w-[325px] md:h-[450px]' : ''}
-    ${frameSize === '15x21' ? 'w-[260px] h-[364px] md:w-[357px] md:h-[500px]' : ''}
+  const containerClasses = `relative border-4 md:border-8 border-[#5D4037] bg-white rounded-md shadow-2xl p-1 md:p-2 transition-all duration-500 ease-in-out flex items-center justify-center overflow-hidden mx-auto
+    ${frameSize === '10x15' ? 'w-[120px] h-[180px] md:w-[266px] md:h-[400px]' : ''}
+    ${frameSize === '13x18' ? 'w-[138px] h-[191px] md:w-[325px] md:h-[450px]' : ''}
+    ${frameSize === '15x21' ? 'w-[156px] h-[218px] md:w-[357px] md:h-[500px]' : ''}
   `;
 
   // Render particles based on selected AR Effect

@@ -53,8 +53,8 @@ export default function DesignPage() {
   return (
     <div className="min-h-screen bg-brand-bg text-brand-text font-sans flex flex-col md:flex-row">
       {/* Mobile Header with Back Button */}
-      <div className="md:hidden flex items-center p-4 bg-white border-b border-brand-wood/20 sticky top-0 z-40">
-        <button onClick={() => navigate('/')} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+      <div className="md:hidden flex items-center h-16 px-4 bg-white border-b border-brand-wood/20 sticky top-0 z-40">
+        <button onClick={() => navigate('/')} className="p-2 hover:bg-gray-100 rounded-full transition-colors -ml-2">
           <ArrowLeft className="w-5 h-5 text-brand-text" />
         </button>
         <span className="ml-2 font-serif font-bold text-brand-wood text-lg">Studio MoryTory</span>
@@ -62,11 +62,11 @@ export default function DesignPage() {
 
       {/* Left Column (Preview) */}
       <div 
-        className={`md:w-1/2 md:sticky md:top-0 md:h-screen flex flex-col bg-brand-bg transition-all duration-300 ease-in-out ${
-          isPreviewCollapsed ? 'h-24 overflow-hidden' : 'h-[40vh] md:h-auto'
+        className={`md:w-1/2 sticky top-16 md:top-0 z-30 md:h-screen flex flex-col bg-brand-bg transition-all duration-300 ease-in-out border-b md:border-none border-brand-wood/10 shadow-sm md:shadow-none ${
+          isPreviewCollapsed ? 'h-16 overflow-hidden' : 'h-auto'
         }`}
       >
-        <div className="relative flex-1 p-4 flex items-center justify-center">
+        <div className="relative flex-1 p-2 md:p-4 flex items-center justify-center">
           {/* Desktop Back Button */}
           <button 
             onClick={() => navigate('/')} 
@@ -81,7 +81,7 @@ export default function DesignPage() {
         
         {/* Mobile Collapse Toggle */}
         <button 
-          className="md:hidden flex items-center justify-center py-2 bg-white border-t border-brand-wood/10 text-gray-500 hover:text-brand-wood shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-20"
+          className="md:hidden flex items-center justify-center py-2 bg-white border-t border-brand-wood/10 text-gray-500 hover:text-brand-wood z-20 text-sm"
           onClick={() => setIsPreviewCollapsed(!isPreviewCollapsed)}
         >
           {isPreviewCollapsed ? (
@@ -93,7 +93,7 @@ export default function DesignPage() {
       </div>
 
       {/* Right Column (Control Panel) */}
-      <div className="md:w-1/2 flex-1 overflow-y-auto bg-white shadow-[-10px_0_20px_-10px_rgba(0,0,0,0.05)] pb-32 md:pb-0">
+      <div className="md:w-1/2 flex-1 md:overflow-y-auto md:h-screen bg-white md:shadow-[-10px_0_20px_-10px_rgba(0,0,0,0.05)] pb-32">
         <div className="max-w-xl mx-auto p-6 md:p-12 space-y-10">
           <div>
             <h2 className="text-3xl font-serif font-bold text-brand-text mb-2">Thiết Kế Khung Ảnh</h2>
